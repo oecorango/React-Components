@@ -1,15 +1,10 @@
-import './App.css';
-// import { getData } from './api/api';
+import './App.scss';
+import { MainPAge } from './pages/MainPage';
 
-function App() {
-  // const data = await getData();
-  const ooo = 'dffd';
-
+function App(): JSX.Element {
   return (
     <>
-      <div>
-        <p>{ooo}</p>
-      </div>
+      <MainPAge />
     </>
   );
 }

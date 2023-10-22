@@ -1,0 +1,21 @@
+.container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 100px;
+  > p {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #e4e4e4;
+    cursor: pointer;
+  }
+  > input {
+    font-size: 1.2rem;
+    width: 40%;
+    border-radius: 5px;
+  }
+  > button {
+    font-size: 1.2rem;
+    border-radius: 5px;
+  }
+}

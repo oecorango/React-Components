@@ -1,0 +1,18 @@
+body {
+  display: flex;
+  box-sizing: border-box;
+  justify-content: center;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 10px;
+  background-color: #1f1f1fe0;
+}
+
+#root {
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 40px;
+}
+
+* {
+  margin: 0;
+}
