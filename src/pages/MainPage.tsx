@@ -1,11 +1,11 @@
 import { Footer } from '../components/Footer';
 import { Header } from '../components/Header';
-import { PeoplesSW } from '../components/PeoplesSW';
+import { PeopleSW } from '../components/PeopleSW';
 export function MainPAge(): JSX.Element {
   return (
     <>
       <Header />
-      <PeoplesSW />
+      <PeopleSW />
       <Footer />
     </>
   );

@@ -26,7 +26,7 @@ export interface SWData {
 
 export type State = {
   isLoaded: boolean;
-  items: SWPeople[];
+  persons: SWPeople[];
 };
 
 export type Props = object;
