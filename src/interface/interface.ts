@@ -31,7 +31,7 @@ export type SWState = {
 
 export type Props = {
   clickHandler?: (str: string) => void;
-  handler: (str: string) => void;
+  handler?: (str: string) => void;
 };
 
 export type SearchPeople = {

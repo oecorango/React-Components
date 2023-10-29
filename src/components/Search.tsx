@@ -31,7 +31,7 @@ export class Search extends Component<Props, SearchPeople> {
         <button
           className={styles.searchButton}
           onClick={() => {
-            this.props.handler(this.state.search);
+            if (this.props.handler) this.props.handler(this.state.search);
           }}
         >
           Search hero`s
