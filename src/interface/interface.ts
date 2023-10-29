@@ -37,3 +37,7 @@ export type Props = {
 export type SearchPeople = {
   search: string;
 };
+
+export type People = {
+  people: SWPeople[];
+};

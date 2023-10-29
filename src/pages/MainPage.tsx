@@ -47,7 +47,7 @@ export class MainPage extends Component<Props, SWState> {
           {!this.state.isLoaded ? (
             <p className={styles.header}>Loading...</p>
           ) : (
-            <PeopleSW {...this.state} />
+            <PeopleSW people={this.state.persons} />
           )}
         </div>
       </main>
