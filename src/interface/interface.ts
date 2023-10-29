@@ -28,3 +28,12 @@ export type SWState = {
   isLoaded: boolean;
   persons: SWPeople[];
 };
+
+export type Props = {
+  clickHandler?: (str: string) => void;
+  handler: (str: string) => void;
+};
+
+export type SearchPeople = {
+  search: string;
+};
