@@ -9,7 +9,7 @@ export class Search extends Component {
 
   render(): JSX.Element {
     return (
-      <>
+      <div className={styles.container}>
         <input
           className={styles.searchInput}
           type="text"
@@ -20,8 +20,15 @@ export class Search extends Component {
           }}
           placeholder="Enter the hero`s name"
         />
-        <button className={styles.searchButton}>Search hero`s</button>
-      </>
+        <button
+          className={styles.searchButton}
+          onClick={() => {
+            // const search = localStorage.getItem('searchValue');
+          }}
+        >
+          Search hero`s
+        </button>
+      </div>
     );
   }
 }

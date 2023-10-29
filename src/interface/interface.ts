@@ -24,9 +24,7 @@ export interface SWData {
   results: SWPeople[];
 }
 
-export type State = {
+export type SWState = {
   isLoaded: boolean;
   persons: SWPeople[];
 };
-
-export type Props = object;

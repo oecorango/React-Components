@@ -1,16 +1,13 @@
 import { Component } from 'react';
-import { Props, State } from '../interface/interface';
+import { SWState } from '../interface/interface';
 import { getSPeopleData } from '../api/api';
 import styles from './PeopleSW.module.scss';
 
-export class PeopleSW extends Component<Props, State> {
-  constructor(props: Props) {
-    super(props);
-    this.state = {
-      isLoaded: false,
-      persons: [],
-    };
-  }
+export class PeopleSW extends Component {
+  state: SWState = {
+    isLoaded: false,
+    persons: [],
+  };
 
   async componentDidMount(): Promise<void> {
     const data = await getSPeopleData();

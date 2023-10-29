@@ -1,6 +1,12 @@
+.container {
+  display: flex;
+  justify-content: space-around;
+}
+
 .searchInput {
   font-size: 1.2rem;
   border-radius: 5px;
+  width: 50%;
 }
 
 .searchButton {

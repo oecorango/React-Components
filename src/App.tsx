@@ -1,10 +1,13 @@
-import './App.scss';
-import { MainPAge } from './pages/MainPage';
+import { Footer } from './components/Footer';
+import { Header } from './components/Header';
+import { MainPage } from './pages/MainPage';
 
 function App(): JSX.Element {
   return (
     <>
-      <MainPAge />
+      <Header />
+      <MainPage />
+      <Footer />
     </>
   );
 }
