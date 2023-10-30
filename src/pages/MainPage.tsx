@@ -1,56 +1,27 @@
-import { Component } from 'react';
-import { getSPeopleData } from '../api/api';
+import { useEffect, useState } from 'react';
 import { PeopleSW } from '../components/PeopleSW';
 import { Search } from '../components/Search';
-import { Props, SWState } from '../interface/interface';
+import { SW_URL } from '../constants/api';
+import { SWData } from '../interface/interface';
 import styles from './MainPage.module.scss';
 
-export class MainPage extends Component<Props, SWState> {
-  constructor(props: Props) {
-    super(props);
-    this.state = {
-      isLoaded: false,
-      persons: [],
-    };
-  }
+export const MainPage = (): JSX.Element => {
+  const [getData, setData] = useState<SWData>();
 
-  clickHandler = async (search: string): Promise<void> => {
-    this.setState({
-      isLoaded: false,
-    });
+  useEffect((): void => {
+    fetch(SW_URL)
+      .then((result) => result.json())
+      .then((data) => setData(data))
+      .catch((err) => console.warn(err));
+  }, []);
 
-    search = encodeURIComponent(search);
-    const data = await getSPeopleData(`?search=${search}`);
-    this.setState({
-      isLoaded: true,
-      persons: data.results,
-    });
-  };
+  return (
+    <main>
+      <Search />
 
-  async componentDidMount(): Promise<void> {
-    const getSearch = localStorage.getItem('searchValue');
-    const urlSearch = () => (getSearch ? `?search=${getSearch}` : '');
-
-    const data = await getSPeopleData(urlSearch());
-    this.setState({
-      isLoaded: true,
-      persons: data.results,
-    });
-  }
-
-  render(): JSX.Element {
-    return (
-      <main>
-        <Search handler={this.clickHandler} />
-
-        <div className={styles.container}>
-          {!this.state.isLoaded ? (
-            <p className={styles.header}>Loading...</p>
-          ) : (
-            <PeopleSW people={this.state.persons} />
-          )}
-        </div>
-      </main>
-    );
-  }
-}
+      <div className={styles.container}>
+        <PeopleSW results={getData} />
+      </div>
+    </main>
+  );
+};
