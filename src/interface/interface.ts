@@ -18,22 +18,8 @@ export interface SWPeople {
 }
 
 export interface SWData {
-  count: number;
-  next: string;
-  previous: string;
-  results: SWPeople[];
+  count?: number;
+  next?: string;
+  previous?: string;
+  results?: SWPeople[];
 }
-
-export type SWState = {
-  isLoaded: boolean;
-  persons: SWPeople[];
-};
-
-export type Props = {
-  clickHandler?: (str: string) => void;
-  handler?: (str: string) => void;
-};
-
-export type SearchPeople = {
-  search: string;
-};

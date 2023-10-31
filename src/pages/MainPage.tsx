@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { Loader } from '../components/Loader';
 import { PeopleSW } from '../components/PeopleSW';
 import { Search } from '../components/Search';
 import { SW_URL } from '../constants/api';
@@ -7,12 +8,24 @@ import styles from './MainPage.module.scss';
 
 export const MainPage = (): JSX.Element => {
   const [getData, setData] = useState<SWData>();
+  const [isDataLoading, setDataLoading] = useState(false);
+
+  const getSPeopleData = async (): Promise<void> => {
+    try {
+      setDataLoading(true);
+
+      const response = await fetch(SW_URL);
+      const people = await response.json();
+
+      setData(people);
+      setDataLoading(false);
+    } catch (err) {
+      console.warn(err);
+    }
+  };
 
   useEffect((): void => {
-    fetch(SW_URL)
-      .then((result) => result.json())
-      .then((data) => setData(data))
-      .catch((err) => console.warn(err));
+    getSPeopleData();
   }, []);
 
   return (
@@ -20,7 +33,7 @@ export const MainPage = (): JSX.Element => {
       <Search />
 
       <div className={styles.container}>
-        <PeopleSW results={getData} />
+        {isDataLoading ? <Loader /> : <PeopleSW {...getData} />}
       </div>
     </main>
   );
