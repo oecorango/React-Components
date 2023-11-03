@@ -33,7 +33,7 @@ export const Search = (): JSX.Element => {
         onChange={(event) => {
           localStorage.setItem('chapterValue', event.target.value);
           setChapter(event.target.value);
-          navigate(event.target.value);
+          navigate(event.target.value !== 'people' ? event.target.value : '/');
         }}
       >
         <option value="people">People</option>
