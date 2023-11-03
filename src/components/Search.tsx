@@ -2,17 +2,18 @@ import { useState } from 'react';
 import styles from './Search.module.scss';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { getChapterInStorage } from '../utils/utils';
+import { CHAPTER, SEARCH_STORAGE } from '../constants/common';
 
 export const Search = (): JSX.Element => {
-  const [saveValue, setSaveSearch] = useState('');
+  const [inputValue, setInputValue] = useState('');
   const [chapter, setChapter] = useState(getChapterInStorage());
   const navigate = useNavigate();
+  const searchValue = localStorage.getItem(SEARCH_STORAGE);
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [searchParams, setSearchParams] = useSearchParams();
 
   function handleSubmit() {
-    setSearchParams(`/${chapter}/?search=${saveValue}`);
+    setSearchParams({ search: inputValue });
   }
 
   return (
@@ -21,17 +22,18 @@ export const Search = (): JSX.Element => {
         className={styles.searchInput}
         type="text"
         onChange={(event) => {
-          localStorage.setItem('searchValue', event.target.value);
-          setSaveSearch(event.target.value);
+          localStorage.setItem(SEARCH_STORAGE, event.target.value);
+          setInputValue(event.target.value);
         }}
-        value={saveValue}
+        value={searchValue ? searchValue : ''}
         placeholder="Enter the hero`s name"
       />
       <select
         className={styles.select}
         value={chapter}
         onChange={(event) => {
-          localStorage.setItem('chapterValue', event.target.value);
+          localStorage.setItem(CHAPTER, event.target.value);
+          localStorage.setItem(SEARCH_STORAGE, '');
           setChapter(event.target.value);
           navigate(event.target.value !== 'people' ? event.target.value : '/');
         }}

@@ -1,7 +1,11 @@
+import styles from './FilmsPage.module.scss';
+
 export const FilmsPage = (): JSX.Element => {
   return (
     <>
-      <p>FilmsPage</p>
+      <div className={styles.container}>
+        <p className={styles.text}>Content about Star Wars MOVIES coming soon</p>
+      </div>
     </>
   );
 };

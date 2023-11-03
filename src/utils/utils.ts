@@ -14,3 +14,15 @@ export const getChapterInStorage = (): string => {
   }
   return 'people';
 };
+
+export const getPageCount = (totalPosts: number, postsInPages: number): number => {
+  return Math.ceil(totalPosts / postsInPages);
+};
+
+export const getPagesArray = (totalPages: number): number[] => {
+  const result = [];
+  for (let i = 0; i < totalPages; i++) {
+    result.push(i + 1);
+  }
+  return result;
+};
