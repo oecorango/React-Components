@@ -3,7 +3,7 @@ import { useState } from 'react';
 interface GetPeople {
   isDataLoading: boolean;
   error: string;
-  getPeople: object;
+  getPeople: () => void;
 }
 
 export const useGetPeople = (callback: () => object): GetPeople => {

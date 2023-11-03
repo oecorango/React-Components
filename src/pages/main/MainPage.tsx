@@ -20,7 +20,7 @@ export const MainPage = (): JSX.Element => {
   });
 
   useEffect((): void => {
-    getPeople;
+    getPeople();
   }, []);
 
   return (
