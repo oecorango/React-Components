@@ -26,3 +26,6 @@ export const getPagesArray = (totalPages: number): number[] => {
   }
   return result;
 };
+
+export const getIdPerson = (url: string): number =>
+  Number(url.split('/').filter((val) => Number(val))[0]);
