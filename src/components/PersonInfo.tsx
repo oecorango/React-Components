@@ -1,11 +1,11 @@
-import { SWPeople } from '../interface/interface';
+import { useContext } from 'react';
+import { CloseFunction, SWPeople } from '../interface/commons';
 import styles from './PersonInfo.module.scss';
+import { Context } from '../context/context';
 
-type Props = {
-  personData: SWPeople | undefined;
-  onClickClose: () => void;
-};
-export const PersonInfo = ({ personData, onClickClose }: Props): JSX.Element => {
+export const PersonInfo = ({ onClickClose }: CloseFunction): JSX.Element => {
+  const { personData } = useContext(Context);
+
   return personData ? (
     <div className={styles.personInfo}>
       <ul className={styles.active}>

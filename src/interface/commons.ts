@@ -1,5 +1,3 @@
-export interface SWFilms {}
-
 export interface SWPeople {
   name: string;
   height: number;
@@ -19,13 +17,13 @@ export interface SWPeople {
   url: string;
 }
 
-export interface SWPlanets {}
-
-export interface SWStarShips {}
-
 export type SWData = {
   count?: number;
   next?: string;
   previous?: string;
-  results?: /*SWFilms[] | */ SWPeople[] /*| SWPlanets[] | SWStarShips[]*/;
+  results?: SWPeople[];
+};
+
+export type CloseFunction = {
+  onClickClose: () => void;
 };

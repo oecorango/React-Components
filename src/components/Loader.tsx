@@ -1,7 +1,10 @@
+import styles from './Loader.module.scss';
+
 export const Loader = (): JSX.Element => {
   return (
     <>
-      <p style={{ fontSize: 50 }}>Loading</p>
+      <div className={styles.loader} />
+      <p className={styles.paragraph}>Loading</p>
     </>
   );
 };

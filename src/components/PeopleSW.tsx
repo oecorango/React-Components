@@ -1,59 +1,30 @@
-import { useEffect, useState } from 'react';
-import { SWData, SWPeople } from '../interface/interface';
 import styles from './PeopleSW.module.scss';
-import { getIdPerson, getPageCount, getPagesArray } from '../utils/utils';
-import { useSearchParams } from 'react-router-dom';
-import { PAGE, POST_IN_PAGE, SEARCH } from '../constants/common';
-import { START_PAGE } from '../constants/pages';
+import { getIdPerson } from '../utils/utils';
 import { Loader } from './Loader';
 import { PersonInfo } from './PersonInfo';
-import { SW_URL } from '../constants/api';
+import { usePeopleSW } from '../hooks/usePeopleSW';
 
-export const PeopleSW = ({ count, results }: SWData): JSX.Element => {
-  const [totalPages, setTotalPages] = useState<number[]>();
-  const [searchParams, setSearchParams] = useSearchParams();
-
-  const currentPageLocation = searchParams.get(PAGE) || START_PAGE;
-  const [currentPage, setCurrentPage] = useState<string>(currentPageLocation);
-
-  const currentSearch = searchParams.get(SEARCH) || '';
-
-  const [idPerson, setIdPerson] = useState<number | null>(null);
-  const [personData, setPersonData] = useState<SWPeople>();
-
-  const [isPersonLoading, setPersonLoading] = useState(false);
-  const handlerPeople = (id: number | null) => (id ? setIdPerson(id) : setIdPerson(null));
-
-  const [infoPanel, setInfoPanel] = useState(false);
-
-  const onClickClose = () => {
-    setIdPerson(null);
-    setInfoPanel(false);
-  };
-
-  useEffect(() => {
-    const pages = getPageCount(count ? count : POST_IN_PAGE, POST_IN_PAGE);
-    const allPages = getPagesArray(pages);
-    setTotalPages(allPages);
-  }, [count]);
-
-  useEffect((): void => {
-    if (idPerson) {
-      setPersonLoading(true);
-      fetch(`${SW_URL}people/${idPerson}`)
-        .then((result) => result.json())
-        .then((data) => setPersonData(data))
-        .then(() => setPersonLoading(false));
-    }
-  }, [idPerson]);
+export const PeopleSW = (): JSX.Element => {
+  const {
+    infoPanel,
+    data,
+    setInfoPanel,
+    handlerPeople,
+    isPersonLoading,
+    onClickClose,
+    totalPages,
+    setSearchParams,
+    currentSearch,
+    currentPage,
+  } = usePeopleSW();
 
   return (
     <>
       <p className={styles.header}>The main characters of the Star Wars saga:</p>
       <div className={styles.content}>
         <div className={infoPanel ? styles.listActive : styles.listPass}>
-          {results?.length ? (
-            results?.map((person, index) => {
+          {data?.results?.length ? (
+            data.results.map((person, index) => {
               const id = getIdPerson(person.url);
               return (
                 <p
@@ -63,7 +34,7 @@ export const PeopleSW = ({ count, results }: SWData): JSX.Element => {
                     setInfoPanel(true);
                     handlerPeople(id);
                   }}
-                >{`${index + 1}. ${person.name} - click for more information...`}</p>
+                >{`${id}. ${person.name} - click for more information...`}</p>
               );
             })
           ) : (
@@ -71,11 +42,7 @@ export const PeopleSW = ({ count, results }: SWData): JSX.Element => {
           )}
         </div>
         <div className={infoPanel ? styles.info : styles.none}>
-          {isPersonLoading ? (
-            <Loader />
-          ) : (
-            <PersonInfo personData={personData} onClickClose={onClickClose} />
-          )}
+          {isPersonLoading ? <Loader /> : <PersonInfo onClickClose={onClickClose} />}
         </div>
       </div>
 
