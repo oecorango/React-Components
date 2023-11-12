@@ -27,5 +27,8 @@ export const getPagesArray = (totalPages: number): number[] => {
   return result;
 };
 
-export const getIdPerson = (url: string): number =>
-  Number(url.split('/').filter((val) => Number(val))[0]);
+export const getIdPerson = (url: string): number => {
+  const idPerson = Number(url.split('/').filter((val) => Number(val))[0]);
+  const result = idPerson && idPerson >= 1 ? idPerson : 1;
+  return result;
+};

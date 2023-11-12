@@ -27,10 +27,8 @@ export const PeoplePage = (): JSX.Element => {
   }, [currentPage, currentSearch]);
 
   return (
-    <>
-      <div className={isDataLoading ? styles.loading : styles.container}>
-        {isDataLoading ? <Loader /> : <PeopleSW />}
-      </div>
-    </>
+    <div className={isDataLoading ? styles.loading : styles.container}>
+      {isDataLoading ? <Loader /> : <PeopleSW />}
+    </div>
   );
 };
