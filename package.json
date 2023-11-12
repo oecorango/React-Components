@@ -51,7 +51,7 @@
     "**/*.{ts,tsx}": [
       "npx eslint --ext ts,tsx",
       "npx prettier --write .",
-      "npx run test"
+      "npx vitest --run"
     ]
   }
 }
