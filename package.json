@@ -50,7 +50,8 @@
   "lint-staged": {
     "**/*.{ts,tsx}": [
       "npx eslint --ext ts,tsx",
-      "npx prettier --write ."
+      "npx prettier --write .",
+      "vitest"
     ]
   }
 }
