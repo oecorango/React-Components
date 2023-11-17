@@ -1,8 +1,7 @@
 import { describe, test, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
-import { userEvent } from '@testing-library/user-event';
+import { MemoryRouter } from 'react-router-dom';
 import App from './App';
-import { BrowserRouter, MemoryRouter } from 'react-router-dom';
 
 describe('#Test App', () => {
   test('Error Page', () => {

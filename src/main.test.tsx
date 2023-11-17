@@ -1,13 +1,13 @@
 import { render, screen } from '@testing-library/react';
 import { test, expect } from 'vitest';
-import { BrowserRouter } from 'react-router-dom';
+import { MemoryRouter } from 'react-router-dom';
 import App from './App';
 
 test('renders Catalog link', () => {
   render(
-    <BrowserRouter>
+    <MemoryRouter>
       <App />
-    </BrowserRouter>,
+    </MemoryRouter>,
   );
 
   const logo = screen.getByText('SW People');
