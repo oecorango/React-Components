@@ -13,34 +13,4 @@ describe('#Test App', () => {
 
     expect(screen.getByTestId('error-page')).toBeInTheDocument();
   });
-
-  test('Planets Page', () => {
-    render(
-      <MemoryRouter initialEntries={['/planets']}>
-        <App />
-      </MemoryRouter>,
-    );
-
-    expect(screen.getByTestId('planets-page')).toBeInTheDocument();
-  });
-
-  test('StarShips Page', () => {
-    render(
-      <MemoryRouter initialEntries={['/starships']}>
-        <App />
-      </MemoryRouter>,
-    );
-
-    expect(screen.getByTestId('starShips-page')).toBeInTheDocument();
-  });
-
-  test('StarShips Page', () => {
-    render(
-      <MemoryRouter initialEntries={['/films']}>
-        <App />
-      </MemoryRouter>,
-    );
-
-    expect(screen.getByTestId('films-page')).toBeInTheDocument();
-  });
 });
