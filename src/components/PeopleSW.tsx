@@ -1,30 +1,63 @@
 import styles from './PeopleSW.module.scss';
-import { getIdPerson } from '../utils/utils';
+import { getIdPerson, getPageCount, getPagesArray } from '../utils/utils';
 import { Loader } from './Loader';
 import { PersonInfo } from './PersonInfo';
 import { usePeopleSW } from '../hooks/usePeopleSW';
+import { useContext, useEffect, useState } from 'react';
+import { Context } from '../context/context';
+import { useSearchParams } from 'react-router-dom';
+import { PAGE, POST_IN_PAGE, SEARCH } from '../constants/common';
+import { START_PAGE } from '../constants/pages';
+import { SW_URL } from '../constants/api';
+import { SWData } from '../interface/commons';
+import { useAppSelector } from '../hooks/useAppSelector';
+import { useAppDispatch } from '../hooks/useAppDispatch';
+import { fetchSwPeople } from '../store/peopleSlice';
+import { fetchSwPerson } from '../store/personSlice';
 
 export const PeopleSW = (): JSX.Element => {
-  const {
-    infoPanel,
-    data,
-    setInfoPanel,
-    handlerPeople,
-    isPersonLoading,
-    onClickClose,
-    totalPages,
-    setSearchParams,
-    currentSearch,
-    currentPage,
-  } = usePeopleSW();
+  const [totalPages, setTotalPages] = useState<number[]>();
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const currentPageLocation = searchParams.get(PAGE) || START_PAGE;
+  const [currentPage] = useState<string>(currentPageLocation);
+
+  const currentSearch = searchParams.get(SEARCH) || '';
+
+  const [idPerson, setIdPerson] = useState<number | null>(null);
+
+  const handlerPeople = (id: number | null) => (id ? setIdPerson(id) : setIdPerson(null));
+
+  const [infoPanel, setInfoPanel] = useState(false);
+
+  const onClickClose = () => {
+    setIdPerson(null);
+    setInfoPanel(false);
+  };
+
+  const dispatch = useAppDispatch();
+
+  const { count, results } = useAppSelector((state) => state.people.response);
+
+  const { loading } = useAppSelector((state) => state.person);
+
+  useEffect(() => {
+    dispatch(fetchSwPerson(idPerson));
+  }, [dispatch, idPerson]);
+
+  useEffect(() => {
+    const pages = getPageCount(count ? count : POST_IN_PAGE, POST_IN_PAGE);
+    const allPages = getPagesArray(pages);
+    setTotalPages(allPages);
+  }, [count]);
 
   return (
     <>
       <p className={styles.header}>The main characters of the Star Wars saga:</p>
       <div className={styles.content}>
         <div className={infoPanel ? styles.listActive : styles.listPass}>
-          {data?.results?.length ? (
-            data.results.map((person, index) => {
+          {results?.length ? (
+            results.map((person, index) => {
               const id = getIdPerson(person.url);
               return (
                 <p
@@ -42,7 +75,7 @@ export const PeopleSW = (): JSX.Element => {
           )}
         </div>
         <div className={infoPanel ? styles.info : styles.none}>
-          {isPersonLoading ? <Loader /> : <PersonInfo onClickClose={onClickClose} />}
+          {loading ? <Loader /> : <PersonInfo onClickClose={onClickClose} />}
         </div>
       </div>
 

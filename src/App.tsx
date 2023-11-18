@@ -8,6 +8,8 @@ import { ErrorPage } from './pages/notFound/ErrorPage';
 import { Context } from './context/context';
 import { useState } from 'react';
 import { SWData, SWPeople } from './interface/commons';
+import { Provider } from 'react-redux';
+import { store } from './store/index';
 
 const App = (): JSX.Element => {
   const [data, setData] = useState<SWData | null>(null);
@@ -15,16 +17,17 @@ const App = (): JSX.Element => {
   const [personData, setPersonData] = useState<SWPeople | null>(null);
 
   return (
-    <Context.Provider
-      value={{
-        data,
-        setData,
-        search,
-        setSearch,
-        personData,
-        setPersonData,
-      }}
-    >
+    <Provider store={store}>
+      {/* <Context.Provider
+        value={{
+          data,
+          setData,
+          search,
+          setSearch,
+          personData,
+          setPersonData,
+        }}
+      > */}
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<PeoplePage />} />
@@ -34,7 +37,8 @@ const App = (): JSX.Element => {
           <Route path="*" element={<ErrorPage />} />
         </Route>
       </Routes>
-    </Context.Provider>
+      {/* </Context.Provider> */}
+    </Provider>
   );
 };
 

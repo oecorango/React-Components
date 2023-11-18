@@ -1,34 +1,36 @@
 import { useContext, useEffect, useState } from 'react';
 import { Loader } from '../../components/Loader';
 import { PeopleSW } from '../../components/PeopleSW';
-import { SW_URL } from '../../constants/api';
+
 import styles from './PeoplePage.module.scss';
 import { useSearchParams } from 'react-router-dom';
 import { Context } from '../../context/context';
 import { PAGE, SEARCH } from '../../constants/common';
 import { START_PAGE } from '../../constants/pages';
+import { fetchSwPeople } from '../../store/peopleSlice';
+import { RootState } from '../../store';
+import { SWData } from '../../interface/commons';
+import { useAppDispatch } from '../../hooks/useAppDispatch';
+import { useAppSelector } from '../../hooks/useAppSelector';
 
 export const PeoplePage = (): JSX.Element => {
-  const { setData } = useContext(Context);
-
-  const [isDataLoading, setDataLoading] = useState(false);
-
   const [pageParams] = useSearchParams();
+
+  const dispatch = useAppDispatch();
+  const { loading, error } = useAppSelector((state) => state.people);
 
   const currentPage = pageParams.get(PAGE) || START_PAGE;
   const currentSearch = pageParams.get(SEARCH) || '';
+  const searchParams = `?search=${currentSearch}&page=${currentPage}`;
 
-  useEffect((): void => {
-    setDataLoading(true);
-    fetch(`${SW_URL}people?search=${currentSearch}&page=${currentPage}`)
-      .then((result) => result.json())
-      .then((data) => setData(data))
-      .then(() => setDataLoading(false));
-  }, [currentPage, currentSearch]);
+  useEffect(() => {
+    dispatch(fetchSwPeople(searchParams));
+  }, [dispatch, searchParams]);
 
   return (
-    <div className={isDataLoading ? styles.loading : styles.container}>
-      {isDataLoading ? <Loader /> : <PeopleSW />}
+    <div className={loading ? styles.loading : styles.container}>
+      {loading ? <Loader /> : <PeopleSW />}
+      {error && <h1>{error}</h1>}
     </div>
   );
 };
