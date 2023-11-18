@@ -1,22 +1,25 @@
-import { useContext, useState } from 'react';
+import { useState } from 'react';
 import styles from './Search.module.scss';
-import { useNavigate, useSearchParams } from 'react-router-dom';
-import { getChapterInStorage } from '../utils/utils';
-import { CHAPTER, SEARCH_STORAGE } from '../constants/common';
-import { Context } from '../context/context';
+import { useSearchParams } from 'react-router-dom';
+import { searchRequest } from '../utils/utils';
+import { SEARCH_STORAGE } from '../constants/common';
+import { useAppDispatch } from '../hooks/useAppDispatch';
+import { fetchSwPeople, findPeople } from '../store/peopleSlice';
+import { useAppSelector } from '../hooks/useAppSelector';
 
 export const Search = (): JSX.Element => {
-  const { search, setSearch } = useContext(Context);
+  const [_, setSearchParams] = useSearchParams();
 
-  const [chapter, setChapter] = useState(getChapterInStorage());
-  const navigate = useNavigate();
-  const searchValue = localStorage.getItem(SEARCH_STORAGE);
+  const dispatch = useAppDispatch();
+  const { searchValue } = useAppSelector((state) => state.people);
+  const searchParams = searchRequest('1', searchValue);
 
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [search, setSearch] = useState(searchValue);
 
-  function handleSubmit() {
-    setSearchParams({ search: search ? search : '' });
-  }
+  const handleSubmit = () => {
+    dispatch(fetchSwPeople(searchParams));
+    setSearchParams({ search: search });
+  };
 
   return (
     <div className={styles.container}>
@@ -26,25 +29,11 @@ export const Search = (): JSX.Element => {
         onChange={(event) => {
           localStorage.setItem(SEARCH_STORAGE, event.target.value);
           setSearch(event.target.value);
+          dispatch(findPeople(event.target.value));
         }}
-        value={searchValue ? searchValue : ''}
+        value={search}
         placeholder="Enter the hero`s name"
       />
-      <select
-        className={styles.select}
-        value={chapter}
-        onChange={(event) => {
-          localStorage.setItem(CHAPTER, event.target.value);
-          localStorage.setItem(SEARCH_STORAGE, '');
-          setChapter(event.target.value);
-          navigate(event.target.value !== 'people' ? event.target.value : '/');
-        }}
-      >
-        <option value="people">People</option>
-        <option value="films">Films</option>
-        <option value="planets">Planets</option>
-        <option value="starships">Star ships</option>
-      </select>
       <button className={styles.searchButton} onClick={handleSubmit}>
         Search hero`s
       </button>

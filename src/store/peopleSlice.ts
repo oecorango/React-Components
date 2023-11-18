@@ -1,8 +1,10 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { SW_URL } from '../constants/api';
 import { SWData } from '../interface/commons';
+import { SEARCH_STORAGE } from '../constants/common';
 
 type DataState = {
+  searchValue: string;
   loading: boolean;
   response: SWData;
   error: string | null;
@@ -20,7 +22,16 @@ export const fetchSwPeople = createAsyncThunk<SWData, string, { rejectValue: str
   },
 );
 
+const initSearchValue = () => {
+  const value = localStorage.getItem(SEARCH_STORAGE);
+  if (value) {
+    return value;
+  }
+  return '';
+};
+
 const initialState: DataState = {
+  searchValue: initSearchValue(),
   loading: false,
   response: {},
   error: null,
@@ -30,7 +41,11 @@ const peopleSlice = createSlice({
   name: 'people',
   initialState,
 
-  reducers: {},
+  reducers: {
+    findPeople(state, action: PayloadAction<string>) {
+      state.searchValue = action.payload;
+    },
+  },
 
   extraReducers: (builder) => {
     builder
@@ -48,6 +63,6 @@ const peopleSlice = createSlice({
   },
 });
 
-// export const { search } = peopleSlice.actions;
+export const { findPeople } = peopleSlice.actions;
 
 export default peopleSlice.reducer;

@@ -2,17 +2,12 @@ import styles from './PeopleSW.module.scss';
 import { getIdPerson, getPageCount, getPagesArray } from '../utils/utils';
 import { Loader } from './Loader';
 import { PersonInfo } from './PersonInfo';
-import { usePeopleSW } from '../hooks/usePeopleSW';
-import { useContext, useEffect, useState } from 'react';
-import { Context } from '../context/context';
+import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { PAGE, POST_IN_PAGE, SEARCH } from '../constants/common';
 import { START_PAGE } from '../constants/pages';
-import { SW_URL } from '../constants/api';
-import { SWData } from '../interface/commons';
 import { useAppSelector } from '../hooks/useAppSelector';
 import { useAppDispatch } from '../hooks/useAppDispatch';
-import { fetchSwPeople } from '../store/peopleSlice';
 import { fetchSwPerson } from '../store/personSlice';
 
 export const PeopleSW = (): JSX.Element => {

@@ -32,3 +32,7 @@ export const getIdPerson = (url: string): number => {
   const result = idPerson && idPerson >= 1 ? idPerson : 1;
   return result;
 };
+
+export const searchRequest = (page: string, searchStr: string): string => {
+  return `?search=${searchStr}&page=${page}`;
+};
