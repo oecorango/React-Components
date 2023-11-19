@@ -2,13 +2,7 @@ import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { SW_URL } from '../constants/api';
 import { SWData } from '../interface/commons';
 import { SEARCH_STORAGE } from '../constants/common';
-
-type DataState = {
-  searchValue: string;
-  loading: boolean;
-  response: SWData;
-  error: string | null;
-};
+import { DataState } from '../interface/redux';
 
 export const fetchSwPeople = createAsyncThunk<SWData, string, { rejectValue: string }>(
   'people/fetchSwPeople',
@@ -17,7 +11,7 @@ export const fetchSwPeople = createAsyncThunk<SWData, string, { rejectValue: str
     if (!response.ok) {
       return rejectWithValue('Server error');
     }
-    const data = await response.json();
+    const data: SWData = await response.json();
     return data;
   },
 );
@@ -58,7 +52,9 @@ const peopleSlice = createSlice({
         state.response = action.payload;
       })
       .addCase(fetchSwPeople.rejected, (state, action) => {
-        state.error = action.error.message ? action.error.message : null;
+        if (action.error.message) {
+          state.error = action.error.message;
+        }
       });
   },
 });

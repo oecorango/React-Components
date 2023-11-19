@@ -3,7 +3,7 @@ import { Loader } from '../../components/Loader';
 import { PeopleSW } from '../../components/PeopleSW';
 import styles from './PeoplePage.module.scss';
 import { useSearchParams } from 'react-router-dom';
-import { PAGE, SEARCH, SEARCH_STORAGE } from '../../constants/common';
+import { PAGE, SEARCH } from '../../constants/common';
 import { START_PAGE } from '../../constants/pages';
 import { fetchSwPeople } from '../../store/peopleSlice';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
@@ -11,12 +11,7 @@ import { useAppSelector } from '../../hooks/useAppSelector';
 import { searchRequest } from '../../utils/utils';
 
 export const PeoplePage = (): JSX.Element => {
-  const [pageParams, setPageParams] = useSearchParams();
-
-  const saveSearchValue = localStorage.getItem(SEARCH_STORAGE);
-  if (saveSearchValue) {
-    setPageParams({ search: saveSearchValue });
-  }
+  const [pageParams] = useSearchParams();
 
   const currentPage = pageParams.get(PAGE) || START_PAGE;
   const currentSearch = pageParams.get(SEARCH) || '';

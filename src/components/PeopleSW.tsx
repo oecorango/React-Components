@@ -1,50 +1,22 @@
 import styles from './PeopleSW.module.scss';
-import { getIdPerson, getPageCount, getPagesArray } from '../utils/utils';
+import { getIdPerson } from '../utils/utils';
 import { Loader } from './Loader';
 import { PersonInfo } from './PersonInfo';
-import { useEffect, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
-import { PAGE, POST_IN_PAGE, SEARCH } from '../constants/common';
-import { START_PAGE } from '../constants/pages';
-import { useAppSelector } from '../hooks/useAppSelector';
-import { useAppDispatch } from '../hooks/useAppDispatch';
-import { fetchSwPerson } from '../store/personSlice';
+import { usePeopleSW } from '../hooks/usePeopleSW';
 
 export const PeopleSW = (): JSX.Element => {
-  const [totalPages, setTotalPages] = useState<number[]>();
-  const [searchParams, setSearchParams] = useSearchParams();
-
-  const currentPageLocation = searchParams.get(PAGE) || START_PAGE;
-  const [currentPage] = useState<string>(currentPageLocation);
-
-  const currentSearch = searchParams.get(SEARCH) || '';
-
-  const [idPerson, setIdPerson] = useState<number | null>(null);
-
-  const handlerPeople = (id: number | null) => (id ? setIdPerson(id) : setIdPerson(null));
-
-  const [infoPanel, setInfoPanel] = useState(false);
-
-  const onClickClose = () => {
-    setIdPerson(null);
-    setInfoPanel(false);
-  };
-
-  const dispatch = useAppDispatch();
-
-  const { count, results } = useAppSelector((state) => state.people.response);
-
-  const { loading } = useAppSelector((state) => state.person);
-
-  useEffect(() => {
-    dispatch(fetchSwPerson(idPerson));
-  }, [dispatch, idPerson]);
-
-  useEffect(() => {
-    const pages = getPageCount(count ? count : POST_IN_PAGE, POST_IN_PAGE);
-    const allPages = getPagesArray(pages);
-    setTotalPages(allPages);
-  }, [count]);
+  const {
+    infoPanel,
+    setInfoPanel,
+    handlerPeople,
+    onClickClose,
+    totalPages,
+    setSearchParams,
+    currentSearch,
+    currentPage,
+    results,
+    loading,
+  } = usePeopleSW();
 
   return (
     <>

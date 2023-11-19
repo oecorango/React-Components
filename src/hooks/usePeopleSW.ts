@@ -1,15 +1,14 @@
-import { useContext, useEffect, useState } from 'react';
-import { Context } from '../context/context';
+import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { SW_URL } from '../constants/api';
 import { PAGE, SEARCH, POST_IN_PAGE } from '../constants/common';
 import { START_PAGE } from '../constants/pages';
 import { getPageCount, getPagesArray } from '../utils/utils';
 import { PeopleSWReturn } from '../interface/hooks';
+import { useAppDispatch } from './useAppDispatch';
+import { useAppSelector } from './useAppSelector';
+import { fetchSwPerson } from '../store/personSlice';
 
 export const usePeopleSW = (): PeopleSWReturn => {
-  const { data, setPersonData } = useContext(Context);
-
   const [totalPages, setTotalPages] = useState<number[]>();
   const [searchParams, setSearchParams] = useSearchParams();
 
@@ -20,7 +19,6 @@ export const usePeopleSW = (): PeopleSWReturn => {
 
   const [idPerson, setIdPerson] = useState<number | null>(null);
 
-  const [isPersonLoading, setPersonLoading] = useState(false);
   const handlerPeople = (id: number | null) => (id ? setIdPerson(id) : setIdPerson(null));
 
   const [infoPanel, setInfoPanel] = useState(false);
@@ -30,32 +28,32 @@ export const usePeopleSW = (): PeopleSWReturn => {
     setInfoPanel(false);
   };
 
+  const dispatch = useAppDispatch();
+
+  const { count, results } = useAppSelector((state) => state.people.response);
+
+  const { loading } = useAppSelector((state) => state.person);
+
   useEffect(() => {
-    const pages = getPageCount(data?.count ? data?.count : POST_IN_PAGE, POST_IN_PAGE);
+    dispatch(fetchSwPerson(idPerson));
+  }, [dispatch, idPerson]);
+
+  useEffect(() => {
+    const pages = getPageCount(count ? count : POST_IN_PAGE, POST_IN_PAGE);
     const allPages = getPagesArray(pages);
     setTotalPages(allPages);
-  }, [data?.count]);
-
-  useEffect((): void => {
-    if (idPerson) {
-      setPersonLoading(true);
-      fetch(`${SW_URL}people/${idPerson}`)
-        .then((result) => result.json())
-        .then((data) => setPersonData(data))
-        .then(() => setPersonLoading(false));
-    }
-  }, [idPerson]);
+  }, [count]);
 
   return {
     infoPanel,
-    data,
     setInfoPanel,
     handlerPeople,
-    isPersonLoading,
     onClickClose,
     totalPages,
     setSearchParams,
     currentSearch,
     currentPage,
+    results,
+    loading,
   };
 };

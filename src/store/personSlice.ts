@@ -1,12 +1,7 @@
-import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { SW_URL } from '../constants/api';
 import { SWPeople } from '../interface/commons';
-
-type personState = {
-  loading: boolean;
-  personData: SWPeople | null;
-  error: string | null;
-};
+import { personState } from '../interface/redux';
 
 export const fetchSwPerson = createAsyncThunk<SWPeople, number | null, { rejectValue: string }>(
   'person/fetchSwPerson',
