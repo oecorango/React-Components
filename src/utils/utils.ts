@@ -4,17 +4,6 @@ export const getSearchInLocalStorage = (): string => {
   return '';
 };
 
-export const getChapterInStorage = (): string => {
-  const value = localStorage.getItem('chapterValue');
-  if (value !== null) {
-    return value;
-  }
-  if (value === 'people') {
-    return '/';
-  }
-  return 'people';
-};
-
 export const getPageCount = (totalPosts: number, postsInPages: number): number => {
   return Math.ceil(totalPosts / postsInPages);
 };
