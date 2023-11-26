@@ -1,0 +1,22 @@
+.container {
+  display: flex;
+  font-size: 1.2rem;
+  color: #e4e4e4;
+  justify-content: space-between;
+  padding-top: 20px;
+  width: 100%;
+}
+
+.people {
+  width: 100%;
+}
+
+.person {
+  font-size: 1.2rem;
+  color: #e4e4e4;
+  margin: 10px 20px;
+  padding: 5px;
+  border: solid 1px #e4e4e4;
+  border-radius: 5px;
+  cursor: pointer;
+}
