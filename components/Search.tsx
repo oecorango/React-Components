@@ -1,11 +1,31 @@
 'use client';
+import { FormEventHandler, useState } from 'react';
 import styles from './Search.module.scss';
+import { useRouter } from 'next/navigation';
 
-export const Search = (): JSX.Element => {
+const Search = () => {
+  const router = useRouter();
+
+  const handleSubmit: FormEventHandler<HTMLFormElement> = async (event) => {
+    event.preventDefault();
+    router.push(`?search=${search}&page=1`, { scroll: false });
+  };
+  const [search, setSearch] = useState('');
+
   return (
-    <div className={styles.container}>
-      <input className={styles.searchInput} type="text" placeholder="Enter the hero`s name" />
-      <button className={styles.searchButton}>Search hero`s</button>
-    </div>
+    <form className={styles.container} onSubmit={handleSubmit}>
+      <input
+        className={styles.searchInput}
+        type="search"
+        value={search}
+        onChange={(event) => setSearch(event.target.value)}
+        placeholder="Enter the hero`s name"
+      />
+      <button className={styles.searchButton} type="submit">
+        Search hero`s
+      </button>
+    </form>
   );
 };
+
+export default Search;

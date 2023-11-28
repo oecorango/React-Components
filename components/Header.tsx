@@ -1,5 +1,5 @@
 import styles from './Header.module.scss';
-import { Search } from './Search';
+import Search from './Search';
 
 export const Header = (): JSX.Element => (
   <header className={styles.container}>

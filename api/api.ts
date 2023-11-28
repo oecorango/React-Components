@@ -1,8 +1,10 @@
 import { SWData, SWPeople } from "interfaces";
 import { getPageCount, getPagesArray } from "utils";
 
-export async function getPeople(pages: string) {
-  const response = await fetch(`https://swapi.dev/api/people?page=${pages}`, {
+export async function getPeople(search: string, page: string) {
+  const searchValue = search ? search : '';
+  const currentPage = page ? page : '1'
+  const response = await fetch(`https://swapi.dev/api/people?search=${searchValue}&page=${currentPage}`, {
     next: {
       revalidate: 600,
     },

@@ -6,15 +6,15 @@ import styles from './People.module.scss';
 import PersonInfo from './PersonInfo';
 
 type Props = {
-  data: SWPeople[];
-  personData: SWPeople | null;
+  data: SWPeople[] | null;
+  personData?: SWPeople | null;
 };
 
 export default function People({ data, personData }: Props) {
   return (
     <div className={styles.container}>
       <div className={styles.people}>
-        {data.map((person: SWPeople, index: number) => {
+        {data?.map((person: SWPeople, index: number) => {
           const personId = getIdPerson(person.url);
           return (
             <p key={index} className={styles.person}>
@@ -23,7 +23,7 @@ export default function People({ data, personData }: Props) {
           );
         })}
       </div>
-      <PersonInfo personData={personData} />
+      {/* <PersonInfo personData={personData} /> */}
     </div>
   );
 }

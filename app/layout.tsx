@@ -7,7 +7,7 @@ import { getIdPerson } from 'utils';
 import { getPeople } from 'api/api';
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
-  const { data } = await getPeople('');
+  const { data } = await getPeople('', '');
 
   return (
     <html lang="en">
