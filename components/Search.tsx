@@ -1,27 +1,28 @@
 'use client';
 import { FormEventHandler, useState } from 'react';
 import styles from './Search.module.scss';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 
 const Search = () => {
+  const searchParams = useSearchParams();
+  const search = searchParams?.get('search');
+
   const router = useRouter();
 
   const handleSubmit: FormEventHandler<HTMLFormElement> = async (event) => {
     event.preventDefault();
-    router.push(`?search=${search}&page=1`, { scroll: false });
+    router.push(`?search=${searchValue}&page=1`, { scroll: false });
   };
-  const [search, setSearch] = useState('');
-  const saveSearch = localStorage.getItem('searchValue');
+  const [searchValue, setSearchValue] = useState('');
 
   return (
     <form className={styles.container} onSubmit={handleSubmit}>
       <input
         className={styles.searchInput}
         type="search"
-        value={saveSearch ? saveSearch : ''}
+        value={searchValue ? searchValue : search ? search : ''}
         onChange={(event) => {
-          localStorage.setItem('searchValue', event.target.value);
-          setSearch(event.target.value);
+          setSearchValue(event.target.value);
         }}
         placeholder="Enter the hero`s name"
       />
