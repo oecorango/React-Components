@@ -4,11 +4,7 @@ import { getPageCount, getPagesArray } from "utils";
 export async function getPeople(search: string, page: string) {
   const searchValue = search ? search : '';
   const currentPage = page ? page : '1'
-  const response = await fetch(`https://swapi.dev/api/people?search=${searchValue}&page=${currentPage}`, {
-    next: {
-      revalidate: 600,
-    },
-  });
+  const response = await fetch(`https://swapi.dev/api/people?search=${searchValue}&page=${currentPage}`);
 
   const data: SWData = await response.json();
 
@@ -19,15 +15,12 @@ export async function getPeople(search: string, page: string) {
 
 
 export async function getPersonData(id: string) {
-  if (id) {
-    const response = await fetch(`https://swapi.dev/api/people/${id}`, {
-      next: {
-        revalidate: 600,
-      },
-    });
+  try {
+    const response = await fetch(`https://swapi.dev/api/people/${id}`);
     const data: SWPeople = await response.json();
-    return data;
-  }
 
-  return null;
-}
+    return data;
+  } catch (err) {
+    console.warn(err)
+  }
+};

@@ -1,7 +1,10 @@
 .active {
   display: block;
-  font-size: 1.4rem;
   color: #e4e4e4;
+  font-size: 1.4rem;
+  @media (max-width: 650px) {
+    font-size: 1rem;
+  }
 }
 
 .none {
@@ -11,21 +14,37 @@
 .personInfo {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   flex-direction: column;
   border: 1px solid #e4e4e4;
   width: 600px;
   border-radius: 5px;
   padding: 20px;
-  height: 200px;
+  height: 160px;
   margin: 10px 20px;
+  @media (max-width: 650px) {
+    width: 300px;
+  }
 }
 
-.button {
+.link {
+  display: flex;
+  text-decoration: none;
+  align-items: center;
+  justify-content: center;
+  color: #1f1f1f;
   background-color: #e4e4e4;
   font-size: 1.4rem;
-  margin: 20px;
+  border: solid 1px #000;
   border-radius: 5px;
   height: 30px;
   width: 150px;
-  cursor: pointer;
+  transition: all 0.3s ease-out;
+  &:hover {
+    background-color: #810000c0;
+  }
+  @media (max-width: 650px) {
+    font-size: 1rem;
+    width: 100px;
+  }
 }

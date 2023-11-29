@@ -21,6 +21,7 @@ export interface SWPeople {
   created: string;
   edited: string;
   url: string;
+  detail?: string;
 }
 
 export type SWData = {

@@ -1,29 +1,33 @@
 'use client';
-import { getPersonData } from 'api/api';
 import { SWPeople } from 'interfaces';
 import { getIdPerson } from 'utils';
 import styles from './People.module.scss';
-import PersonInfo from './PersonInfo';
+import Link from 'next/link';
 
 type Props = {
   data: SWPeople[] | null;
-  personData?: SWPeople | null;
+  searchParams: { [key: string]: string };
 };
 
-export default function People({ data, personData }: Props) {
+export default function People({ data, searchParams }: Props) {
+  const { search, page } = searchParams;
+  const searchValue = search ? search : '';
+  const currentPage = page ? Number(page) : 1;
+
   return (
     <div className={styles.container}>
-      <div className={styles.people}>
-        {data?.map((person: SWPeople, index: number) => {
-          const personId = getIdPerson(person.url);
-          return (
-            <p key={index} className={styles.person}>
-              {`${personId}. ${person.name} - click for more information...`}
-            </p>
-          );
-        })}
-      </div>
-      {/* <PersonInfo personData={personData} /> */}
+      {data?.map((person: SWPeople, index: number) => {
+        const personId = getIdPerson(person.url);
+        return (
+          <Link
+            href={`?search=${searchValue}&page=${currentPage}&details=${personId}`}
+            key={index}
+            className={styles.person}
+          >
+            {`${personId}. ${person.name} - click for more information...`}
+          </Link>
+        );
+      })}
     </div>
   );
 }
