@@ -1,5 +1,5 @@
-import { getPagesArray, getIdPerson } from './utils';
-import { describe, test, expect } from 'vitest';
+import { getPagesArray, getIdPerson } from './index';
+
 
 describe('#getPagesArray', () => {
   test('return an empty array', () => {

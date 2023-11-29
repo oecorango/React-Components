@@ -3,7 +3,8 @@ import { getPageCount, getPagesArray } from "utils";
 
 export async function getPeople(search: string, page: string) {
   const searchValue = search ? search : '';
-  const currentPage = page ? page : '1'
+  const currentPage = page ? page : '1';
+
   const response = await fetch(`https://swapi.dev/api/people?search=${searchValue}&page=${currentPage}`);
 
   const data: SWData = await response.json();
@@ -26,12 +27,11 @@ export async function getPersonData(id: string) {
 };
 
 export async function fakeFetch() {
-  try {
-    const response = await fetch(`https://sapi.dev/api/`);
-    const data: SWPeople = await response.json();
+  const response = await fetch(`https://sapi.dev/api/`);
+  const fakeData: SWData = await response.json();
 
-    return data;
-  } catch (err) {
-    console.warn(err)
-  }
+  const allPages = getPageCount(fakeData.count, 10);
+  const fakePagination = getPagesArray(allPages);
+
+  return { fakeData, fakePagination };
 };

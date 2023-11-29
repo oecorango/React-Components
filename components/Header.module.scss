@@ -2,7 +2,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 100px;
+  height: 140px;
   border-bottom: 2px solid #e4e4e4;
   justify-content: space-around;
   flex-wrap: wrap;
@@ -14,4 +14,12 @@
   color: #e4e4e4;
   padding: 0 30px;
   cursor: pointer;
+}
+
+.errorButton {
+  justify-self: end;
+  font-size: 1.2rem;
+  border-radius: 5px;
+  margin: 5px 0;
+  background-color: #810000c0;
 }

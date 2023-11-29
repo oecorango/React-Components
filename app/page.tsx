@@ -1,12 +1,12 @@
 import Pagination from '@/components/Pagination';
 import People from '@/components/People';
 import PersonInfo from '@/components/PersonInfo';
-import { getPeople, getPersonData } from 'api/api';
+import { fakeFetch, getPeople, getPersonData } from 'api/api';
 
 export default async function Home({ searchParams }: { searchParams: { [key: string]: string } }) {
-  const { search, page, details } = searchParams;
-
+  const { search, page, details, error } = searchParams;
   const { data, pagination } = await getPeople(search, page);
+
   const personData = await getPersonData(details);
 
   return (

@@ -15,3 +15,11 @@ export const getPagesArray = (totalPages: number): number[] => {
   }
   return result;
 };
+
+export const getItemFromLocalStorage = () => {
+  try {
+    return localStorage.getItem('saveSearch');
+  } catch (error) { }
+
+  return '';
+}
