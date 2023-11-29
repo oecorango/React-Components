@@ -4,7 +4,7 @@ import { getPageCount, getPagesArray } from "utils";
 export async function getPeople(search: string, page: string) {
   const searchValue = search ? search : '';
   const currentPage = page ? page : '1'
-  const response = await fetch(`ttps://wapi.dev/api/people?search=${searchValue}&page=${currentPage}`);
+  const response = await fetch(`https://swapi.dev/api/people?search=${searchValue}&page=${currentPage}`);
 
   const data: SWData = await response.json();
 
@@ -17,6 +17,17 @@ export async function getPeople(search: string, page: string) {
 export async function getPersonData(id: string) {
   try {
     const response = await fetch(`https://swapi.dev/api/people/${id}`);
+    const data: SWPeople = await response.json();
+
+    return data;
+  } catch (err) {
+    console.warn(err)
+  }
+};
+
+export async function fakeFetch() {
+  try {
+    const response = await fetch(`https://sapi.dev/api/`);
     const data: SWPeople = await response.json();
 
     return data;
