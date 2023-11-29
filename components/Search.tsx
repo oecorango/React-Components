@@ -11,14 +11,18 @@ const Search = () => {
     router.push(`?search=${search}&page=1`, { scroll: false });
   };
   const [search, setSearch] = useState('');
+  const saveSearch = localStorage.getItem('searchValue');
 
   return (
     <form className={styles.container} onSubmit={handleSubmit}>
       <input
         className={styles.searchInput}
         type="search"
-        value={search}
-        onChange={(event) => setSearch(event.target.value)}
+        value={saveSearch ? saveSearch : ''}
+        onChange={(event) => {
+          localStorage.setItem('searchValue', event.target.value);
+          setSearch(event.target.value);
+        }}
         placeholder="Enter the hero`s name"
       />
       <button className={styles.searchButton} type="submit">
